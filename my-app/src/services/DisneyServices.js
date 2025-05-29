@@ -1,3 +1,7 @@
+import {ErrorMessageText} from '../components/errorMessage/ErrorMessage.js';
+	const errorMessageText = <ErrorMessageText/>;
+
+
 class DisneyService {
 
 	//--------------------------------------------------------------------------------
@@ -25,9 +29,9 @@ class DisneyService {
 	_transformCharacter = (Character) => {
 		return {
 			name: Character.name,					
-			films: Character.films,
-			tvShows: Character.tvShows,
-			videoGames: Character.videoGames,					
+			films: Character.films ? `${Character.films.slice(0, 80)}...` : errorMessageText,
+			tvShows: Character.tvShows ? `${Character.tvShows.slice(0, 80)}...` : errorMessageText,
+			videoGames: Character.videoGames ? `${Character.videoGames.slice(0, 80)}...` : errorMessageText,
 			thumbnail: Character.imageUrl,
 			homepage: Character.url,
 			wiki: Character.sourceUrl,			

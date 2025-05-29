@@ -1,7 +1,7 @@
 import { Component } from 'react';
-import DisneyService from '../../services/DisneyServices';
-import ErrorMessage from '../errorMessage/ErrorMessage';
 import Spinner from '../spinner/Spinner';
+import DisneyService from '../../services/DisneyServices';
+import { ErrorMessageImg } from '../errorMessage/ErrorMessage';
 
 import './randomChar.scss';
 
@@ -9,10 +9,10 @@ import mjolnir from '../../resources/img/mjolnir.png';
 
 class RandomChar extends Component {
 
-	constructor(props) {
-		super(props);
-		this.updateCharacter(); 
-	}
+	// constructor(props) { // используем конструктор для вызова метода updateCharacter()
+	// 	super(props); // теперь конструктор не нужен при применении ХУКОВ: componentDidMount() и 
+	// 	console.log('constructor');
+	// }
 
 	state = {
 		character: {}, // character: {name: null, films: null, tvShows: null, videoGames: null, thumbnail: null, homepage: null, wiki: null}
@@ -22,8 +22,25 @@ class RandomChar extends Component {
 	
 	disneyService = new DisneyService();
 
+	componentDidMount () {
+		this.updateCharacter();
+		this.timerId = setInterval(this.updateCharacter, 1800000);
+	}
+
+	componentDidUpdate () { 
+		// console.log('component updated');
+	}
+
+	componentWillUnmount () {
+		clearInterval(this.timerId); 
+		// console.log('unmount');
+	}
+
 	onCharacterLoaded = (character) => {
-		this.setState({character, loading: false})
+		this.setState({
+			character,
+			loading: false,
+		})
 	}
 
 	onError = () => {
@@ -43,13 +60,13 @@ class RandomChar extends Component {
 
 	render () {
 		const {character, loading, error} = this.state;
-		const errorMessage = error ? <ErrorMessage/> : null;
+		const errorMessageImg = error ? <ErrorMessageImg/> : null;
 		const spinner = loading ? <Spinner/> : null;
 		const content = !(loading || error) ? <ViewSpinner character={character}/> : null;
 
 		return (
 			<div className="randomchar">
-				{errorMessage}
+				{errorMessageImg}
 				{spinner}
 				{content}
 				<div className="randomchar__static">

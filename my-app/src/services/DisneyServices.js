@@ -1,6 +1,6 @@
-import {ErrorMessageText} from '../components/errorMessage/ErrorMessage.js';
+import {ErrorMessageImg, ErrorMessageText} from '../components/errorMessage/ErrorMessage.js';
 	const errorMessageText = <ErrorMessageText/>;
-
+	const errorMessageImg = <ErrorMessageImg/>;
 
 class DisneyService {
 
@@ -29,10 +29,10 @@ class DisneyService {
 	_transformCharacter = (Character) => {
 		return {
 			name: Character.name,					
-			films: Character.films ? `${Character.films.slice(0, 80)}...` : errorMessageText,
-			tvShows: Character.tvShows ? `${Character.tvShows.slice(0, 80)}...` : errorMessageText,
-			videoGames: Character.videoGames ? `${Character.videoGames.slice(0, 80)}...` : errorMessageText,
-			thumbnail: Character.imageUrl,
+			films: Character.films ? `${Character.films.slice(0, 10)}...` : errorMessageText,
+			tvShows: Character.tvShows ? `${Character.tvShows.slice(0, 10)}...` : errorMessageText,
+			videoGames: Character.videoGames ? `${Character.videoGames.slice(0, 10)}...` : errorMessageText,
+			thumbnail: Character.imageUrl ? Character.imageUrl : errorMessageImg,
 			homepage: Character.url,
 			wiki: Character.sourceUrl,			
 		}
